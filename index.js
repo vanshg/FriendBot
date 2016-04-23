@@ -95,7 +95,7 @@ var addUser = function(db, user, name) {
 }
 
 var userExists = function(db, user) {
-    var found = false
+    var found = false;
     var collection = db.collection('allusers');
     collection.find({
       id: {$exists: false}
