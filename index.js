@@ -85,7 +85,7 @@ function sendTextMessage(sender, text) {
 }
 
 var addUser = function(db, user, name) {
-    var collection = db.collection('allusers');
+    var collection = db.collection('allusers')
     collection.insert({
         Name: name,
         id: user
@@ -97,10 +97,10 @@ var addUser = function(db, user, name) {
 
 var userExists = function(db, user) {
     var found = false;
-    var collection = db.collection('allusers');
+    var collection = db.collection('allusers')
     console.log("Entered userExists function")
     collection.find({
-      id: {$in: [user] }
+      id: user
     }, function(err, returnedUser){
         if (err) throw err
         console.log("Entered founduser function callback")
