@@ -46,7 +46,7 @@ app.post('/webhook/', function (req, res) {
         sender = event.sender.id
         if (event.message && event.message.text) {
             text = event.message.text
-
+            
             if (sender == 1134345316597574) {
             	sendTextMessage(854092591384757, text)
         	} else if (sender == 854092591384757) {
@@ -79,3 +79,18 @@ function sendTextMessage(sender, text) {
         }
     })
 }
+
+var addUser = function(db, callback, user, name) {
+    var collection = db.collection('allusers');
+    collection.insert({
+        Name: name,
+        id: user
+    }, function(err, returnedUser){
+        if (err) throw err
+    })
+}
+
+
+
+
+
