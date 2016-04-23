@@ -46,7 +46,7 @@ app.post('/webhook/', function (req, res) {
         sender = event.sender.id
         if (event.message && event.message.text) {
             text = event.message.text
-            if(!userExists())
+            if(!userExists(db, sender))
             {
               addUser(db, sender, "")
             }
@@ -94,7 +94,7 @@ var addUser = function(db, user, name) {
     })
 }
 
-var userExists = function(db, user, name) {
+var userExists = function(db, user) {
     var found = false
     var collection = db.collection('allusers');
     collection.find({
