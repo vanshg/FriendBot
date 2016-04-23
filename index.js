@@ -1,7 +1,7 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var request = require('request')
-var storage = require('node-persist');
+var storage = require('node-mongodb-native');
 var app = express()
 
 app.set('port', (process.env.PORT || 5000))
@@ -38,6 +38,7 @@ app.post('/webhook/', function (req, res) {
         sender = event.sender.id
         if (event.message && event.message.text) {
             text = event.message.text
+
             if (sender == 1134345316597574) {
             	sendTextMessage(854092591384757, text)
         	} else if (sender == 854092591384757) {
@@ -70,5 +71,3 @@ function sendTextMessage(sender, text) {
         }
     })
 }
-
-
