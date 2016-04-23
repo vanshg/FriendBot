@@ -36,7 +36,11 @@ app.post('/webhook/', function (req, res) {
         sender = event.sender.id
         if (event.message && event.message.text) {
             text = event.message.text
-            sendTextMessage(sender, "Fuck you bitch, " + sender)
+            if (sender == 1134345316597574) {
+            	sendTextMessage(854092591384757, text)
+        	} else if (sender == 854092591384757) {
+        		sendTextMessage(1134345316597574, text)
+        	}
         }
     }
     res.sendStatus(200)
