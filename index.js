@@ -1,7 +1,8 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var request = require('request')
-var storage = require('node-mongodb-native');
+var storage = require('mongodb').MongoClient
+    , assert = require('assert');
 var app = express()
 
 app.set('port', (process.env.PORT || 5000))
