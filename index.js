@@ -48,7 +48,8 @@ app.post('/webhook/', function (req, res) {
             text = event.message.text
             if(!userExists(db, sender))
             {
-              addUser(db, sender, "")
+                console.log("Entered if statement")
+                addUser(db, sender, "")
             }
             if (sender == 1134345316597574) {
             	sendTextMessage(854092591384757, text)
@@ -97,12 +98,14 @@ var addUser = function(db, user, name) {
 var userExists = function(db, user) {
     var found = false;
     var collection = db.collection('allusers');
+    console.log("Entered userExists function")
     collection.find({
       id: {$in: [user] }
     }, function(err, returnedUser){
         if (err) throw err
+        console.log("Entered founduser function callback")
         found = true
     })
-
+    console.log("Returning value of " + found)
     return found;
 }
