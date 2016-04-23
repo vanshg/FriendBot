@@ -4,13 +4,13 @@ var request = require('request')
 var MongoClient = require('mongodb').MongoClient
     , assert = require('assert');
 var app = express()
+var db = null
 
 var url = "mongodb://root:Nishank@ds019101.mlab.com:19101/friendbotdb"
-MongoClient.connect(url, function(err, db) {
+MongoClient.connect(url, function(err, database) {
   assert.equal(null, err);
   console.log("Connected correctly to server");
-
-  db.close();
+  db = database
 });
 
 app.set('port', (process.env.PORT || 5000))
