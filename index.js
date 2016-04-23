@@ -5,6 +5,8 @@ var storage = require('mongodb').MongoClient
     , assert = require('assert');
 var app = express()
 
+var url = "mongodb://root:Nishank@ds019101.mlab.com:19101/friendbotdb"
+
 app.set('port', (process.env.PORT || 5000))
 storage.initSync();
 
