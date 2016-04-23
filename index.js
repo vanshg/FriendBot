@@ -98,11 +98,10 @@ var userExists = function(db, user) {
     var found = false
     var collection = db.collection('allusers');
     collection.find({
-      id: {$exists: false}
+      id: {$in: [user] }
     }, function(err, returnedUser){
         if (err) throw err
         found = true
-        console.log("Added " + user + " to database")
     })
 
     return found;
