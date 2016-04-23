@@ -13,6 +13,8 @@ MongoClient.connect(url, function(err, database) {
   db = database
 });
 
+app.use(express.static('fb-website'));
+
 app.set('port', (process.env.PORT || 5000))
 
 // Process application/x-www-form-urlencoded
@@ -21,10 +23,10 @@ app.use(bodyParser.urlencoded({extended: false}))
 // Process application/json
 app.use(bodyParser.json())
 
-// Index route
-app.get('/', function (req, res) {
-    res.send('Hello world, I am a chat bot')
-})
+// // Index route
+// app.get('/', function (req, res) {
+//     res.send('Hello world, I am a chat bot')
+// })
 
 // for Facebook verification
 app.get('/webhook/', function (req, res) {
