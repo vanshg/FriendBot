@@ -96,9 +96,7 @@ var userExists = function(db, user) {
     var found = false;
     var collection = db.collection('allusers')
     console.log("Entered userExists function")
-    var cursor = collection.find({
-      id: user
-    })
+    var cursor = collection.find({}).filter({id:user})
     cursor.each(function(err, doc){
         if (err) throw err
         console.log("Entered founduser function callback")
