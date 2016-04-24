@@ -201,7 +201,15 @@ var unpairUser = function(user) {
             if (otherUser != null) {
                 console.log(otherUser)
                 console.log(otherUser['id'])
+                var convos = db.collection('currentconvos')
                 otherUserID = otherUser['id']
+                convos.remove({
+                    id1: user,
+                    id2: otherUser['id']
+                }, function(err, returnedUser){
+                    if (err) throw err
+                    console.log("Removed " + user + " and " + otherUserID + " from convos database")
+                })
                 allUsers.updateOne(
                     {id:{$in: [user]}},
                     {$set: {"inConvo": false}},
