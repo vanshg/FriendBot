@@ -195,6 +195,7 @@ var unpairUser = function(user) {
     var otherUserID = null
     var allUsers = db.collection('allusers')
     var cursor = allUsers.find({"id":{$nin:[user]}, inConvo:{$in: [true]}})
+    console.log("Got to line 198")
     cursor.count(function(err, otherUser) {
             if (err) throw err
             if (otherUser != null) {
