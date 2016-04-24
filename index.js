@@ -46,6 +46,7 @@ app.post('/webhook/', function (req, res) {
             //Check if this person has an ongoing conversation
                 //If so, communicate
                 //Otherwise do the following:
+            console.log(sender)
             addUserIfDoesNotExist(db, sender)
             if (text.startsWith("Start ")) {
                 pairUser(db, sender)
