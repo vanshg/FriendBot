@@ -116,8 +116,8 @@ var pairUser = function(db, user) {
     cursor.count(function(err, numDocs) {
         var rand = Math.floor(Math.random()*numDocs)
         var randomUserCursor = allUsers.find().limit(1).skip(rand)
-        randomUserCursor.each(function(err, otherUser) {
-            console.log(otherUser['id'])
+        randomUserCursor.each(function(err, doc) {
+            console.log(doc['id'])
             // otherUser.find({id:1}, function(err, idCursor) {
             //     console.log(idCursor)
             // })
