@@ -46,7 +46,6 @@ app.post('/webhook/', function (req, res) {
             //Check if this person has an ongoing conversation
                 //If so, communicate
                 //Otherwise do the following:
-            console.log(sender)
             addUserIfDoesNotExist(db, sender)
             if (text.startsWith("Start ")) {
                 pairUser(db, sender)
@@ -112,16 +111,23 @@ var addUserIfDoesNotExist = function(db, user) {
 
 var pairUser = function(db, user) {
     var allUsers = db.collection('allusers')
-    var convos = db.collection('currentconvos')
     var cursor = allUsers.find({"id":{$nin:[user]}})
     cursor.count(function(err, numDocs) {
         var rand = Math.floor(Math.random()*numDocs)
-        var randomUserCursor = allUsers.find({"id":{$nin:[user]}}).limit(1).skip(rand)
+        var randomUserCursor = allUsers.find( ).limit(1).skip(rand)
         randomUserCursor.each(function(err, otherUser) {
             if (err) throw err
             if (otherUser != null) {
                 console.log(otherUser)
                 console.log(otherUser['id'])
+                var convos = db.collection('currentconvos')
+                convos.insert({
+                    id1: user,
+                    id2: otherUser['id']
+                }, function(err, returnedUser){
+                    if (err) throw err
+                    console.log("Added " + user + " and " + otherUser['id'] + " to convos database")
+                })
             }
             // otherUser.find({id:1}, function(err, idCursor) {
             //     console.log(idCursor)
