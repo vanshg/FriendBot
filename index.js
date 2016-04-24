@@ -72,6 +72,7 @@ function sendFriendMessage(sender, text) {
             result1.each(function(err, otherUser) {
                 if (err) throw err
                 if (otherUser != null) {
+                    console.log(otherUser)
                     console.log(otherUser['id'])
                     sendTextMessage(otherUser['id'], text)
                 }
@@ -84,6 +85,7 @@ function sendFriendMessage(sender, text) {
             result2.each(function(err, otherUser) {
                 if (err) throw err
                 if (otherUser != null) {
+                    console.log(otherUser)
                     console.log(otherUser['id'])
                     sendTextMessage(otherUser['id'], text)
                 }
