@@ -43,7 +43,15 @@ app.post('/webhook/', function (req, res) {
         sender = event.sender.id
         if (event.message && event.message.text) {
             text = event.message.text
+            //Check if this person has an ongoing conversation
+                //If so, communicate
+                //Otherwise do the following:
             addUserIfDoesNotExist(db, sender)
+            if (text.startsWith("Start ")) {
+                pairUser(db, sender)
+                //Find a random user to pair up with
+                //Add this pairing to the current coversation database
+            }
             if (sender == 1134345316597574) {
             	sendTextMessage(854092591384757, text)
         	} else if (sender == 854092591384757) {
@@ -99,3 +107,22 @@ var addUserIfDoesNotExist = function(db, user) {
         }
     })
 }
+
+
+var pairUser = function(db, user) {
+    var allUsers = db.collection('allusers')
+    var convos = db.collection('currentconvos')
+    var cursor = allUsers.find({"id":{$nin:[user]}})
+    cursor.count(function(err, numDocs) {
+        var rand = Math.floor(Math.random()*numDocs)
+        var randomUserCursor = allUsers.find().limit(1).skip(rand)
+        randomUserCursor.each(function(err, otherUser) {
+            otherUser.find({id:1}, function(err, idCursor) {
+                console.log(idCursor)
+            })
+        })
+    })
+    
+}
+
+
