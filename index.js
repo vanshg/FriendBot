@@ -43,9 +43,6 @@ app.post('/webhook/', function (req, res) {
         sender = event.sender.id
         if (event.message && event.message.text) {
             text = event.message.text
-            //Check if this person has an ongoing conversation
-                //If so, communicate
-                //Otherwise do the following:
             addUserIfDoesNotExist(sender)
             if (text.startsWith("@start ")) {
                 pairUser(sender)
@@ -54,14 +51,9 @@ app.post('/webhook/', function (req, res) {
                 text = "The chat has been disconnected"
             }
             sendFriendMessage(sender, text)
-         //    if (sender == 1134345316597574) {
-         //    	sendTextMessage(854092591384757, text)
-        	// } else if (sender == 854092591384757) {
-        	// 	sendTextMessage(1134345316597574, text)
-        	// }
         }
     }
-    res.sendStatus(200)
+    res.sendStatus(200) //Successful
 })
 
 var token = "CAAGZCjqmOZAN0BAHdHJ5KqHuxZCekEMGV0maLkq2UQXDApJ9FEKto041YOE1JLYEHZCRyB3jcb5RAi7p0gAh4HBZAZC798u7axmkAbno9kGF9YZCEdZBk9qK8F68BZBnLatoZAexaIxfwueIWyZCgWFKk9ZA5wmhckKh3LHTju47yiSUPzgLclle9ZBR5ZCHH4KVLmb5ZAZB6h92AIdXiwZDZD"
@@ -75,7 +67,6 @@ function sendFriendMessage(sender, text) {
             result1.each(function(err, otherUser) {
                 if (err) throw err
                 if (otherUser != null) {
-                    console.log(otherUser['id2'])
                     sendTextMessage(otherUser['id2'], text)
                 }
             })
@@ -123,16 +114,15 @@ var addUser = function(user, name) {
         Name: name,
         id: user,
         inConvo: false
-    }, function(err, returnedUser){
+    }, function(err, returnedUser) {
         if (err) throw err
-        console.log("Added " + user + " to database")
+        //Nothing further we need to do
     })
 }
 
 var addUserIfDoesNotExist = function(user) {
     var found = false;
     var collection = db.collection('allusers')
-    console.log("Entered userExists function")
     var cursor = collection.find({}).filter({id:user})
     cursor.count(function(err, numDocs) {
         if (numDocs == 0) {
@@ -152,8 +142,6 @@ var pairUser = function(user) {
         randomUserCursor.each(function(err, otherUser) {
             if (err) throw err
             if (otherUser != null) {
-                console.log(otherUser)
-                console.log(otherUser['id'])
                 var convos = db.collection('currentconvos')
                 otherUserID = otherUser['id']
                 convos.insert({
@@ -161,33 +149,28 @@ var pairUser = function(user) {
                     id2: otherUser['id']
                 }, function(err, returnedUser){
                     if (err) throw err
-                    console.log("Added " + user + " and " + otherUserID + " to convos database")
+                    //Nothing further we need to do
                 })
+
                 allUsers.updateOne(
                     {id:{$in: [user]}},
                     {$set: {"inConvo": true}},
-                    function(err, results)
-                    {
-                      if (err) throw err
-                      //console.log(results)
+                    function(err, results) {
+                        if (err) throw err
+                        //Nothing further we need to do
                     }
                 )
-                allUsers.updateOne(
-                    {id:{$in: [otherUserID]}},
+                allUsers.updateOne({
+                    id:{$in: [otherUserID]}},
                     {$set: {"inConvo": true}},
-                    function(err, results)
-                    {
-                      if (err) throw err
-                      //console.log(results)
+                    function(err, results) {
+                        if (err) throw err
+                        //Nothing further we need to do
                     }
                 )
             }
-            // otherUser.find({id:1}, function(err, idCursor) {
-            //     console.log(idCursor)
-            // })
         })
     })
-
 }
 
 var unpairUser = function(user) {
@@ -195,7 +178,6 @@ var unpairUser = function(user) {
     var allUsers = db.collection('allusers')
     var cursor = allUsers.find({"id":{$nin:[user]}, inConvo:{$in: [true]}})
     cursor.count(function(err, numDocs) {
-        //var rand = Math.floor(Math.random()*numDocs)
         var userCursor = allUsers.find({"id":{$nin:[user]}, inConvo:{$in: [true]}})
         userCursor.each(function(err, otherUser) {
             if (err) throw err
@@ -209,38 +191,32 @@ var unpairUser = function(user) {
                     id2: otherUser['id']
                 }, function(err, returnedUser){
                     if (err) throw err
-                    console.log("Removed " + user + " and " + otherUserID + " from convos database")
+                    //Nothing further we need to do
                 })
                 convos.remove({
                     id1: otherUser['id'],
                     id2: user
                 }, function(err, returnedUser){
                     if (err) throw err
-                    console.log("Removed " + user + " and " + otherUserID + " from convos database")
+                    //Nothing further we need to do
                 })
                 allUsers.updateOne(
                     {id:{$in: [user]}},
                     {$set: {"inConvo": false}},
-                    function(err, results)
-                    {
-                      if (err) throw err
-                      //console.log(results)
+                    function(err, results) {
+                        if (err) throw err
+                        //Nothing further we need to do
                     }
                 )
-                allUsers.updateOne(
-                    {id:{$in: [otherUserID]}},
+                allUsers.updateOne({
+                    id:{$in: [otherUserID]}},
                     {$set: {"inConvo": false}},
-                    function(err, results)
-                    {
-                      if (err) throw err
-                      //console.log(results)
+                    function(err, results) {
+                        if (err) throw err
+                        //Nothing further we need to do
                     }
                 )
             }
-            // otherUser.find({id:1}, function(err, idCursor) {
-            //     console.log(idCursor)
-            // })
         })
     })
-
 }
