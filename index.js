@@ -170,7 +170,7 @@ var pairUser = function(user) {
                     function(err, results)
                     {
                       if (err) throw err
-                      console.log(results)
+                      //console.log(results)
                     }
                 )
                 allUsers.updateOne(
@@ -179,7 +179,7 @@ var pairUser = function(user) {
                     function(err, results)
                     {
                       if (err) throw err
-                      console.log(results)
+                      //console.log(results)
                     }
                 )
             }
@@ -208,7 +208,7 @@ var unpairUser = function(user) {
                     function(err, results)
                     {
                       if (err) throw err
-                      console.log(results)
+                      //console.log(results)
                     }
                 )
                 allUsers.updateOne(
@@ -217,7 +217,7 @@ var unpairUser = function(user) {
                     function(err, results)
                     {
                       if (err) throw err
-                      console.log(results)
+                      //console.log(results)
                     }
                 )
             }
