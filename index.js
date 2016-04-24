@@ -50,7 +50,7 @@ app.post('/webhook/', function (req, res) {
             if (text.startsWith("@start ")) {
                 pairUser(sender)
             }
-            else if(text.startsWith("@quit"))
+            else if(text.startsWith("@quit "))
             {
                 unpairUser(sender)
             }
@@ -203,7 +203,7 @@ var unpairUser = function(user) {
                 otherUserID = otherUser['id']
                 allUsers.updateOne(
                     {id:{$in: [user]}},
-                    {$set: {"inConvo": true}},
+                    {$set: {"inConvo": false}},
                     function(err, results)
                     {
                       if (err) throw err
@@ -212,7 +212,7 @@ var unpairUser = function(user) {
                 )
                 allUsers.updateOne(
                     {id:{$in: [otherUserID]}},
-                    {$set: {"inConvo": true}},
+                    {$set: {"inConvo": false}},
                     function(err, results)
                     {
                       if (err) throw err
