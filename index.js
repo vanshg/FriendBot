@@ -116,7 +116,7 @@ var pairUser = function(db, user) {
     var cursor = allUsers.find({"id":{$nin:[user]}, inConvo:{$in: [false]}})
     cursor.count(function(err, numDocs) {
         var rand = Math.floor(Math.random()*numDocs)
-        var randomUserCursor = allUsers.find({inConvo:{$in: [false]}}).limit(1).skip(rand)
+        var randomUserCursor = allUsers.find({"id":{$nin:[user]}, inConvo:{$in: [false]}}).limit(1).skip(rand)
         randomUserCursor.each(function(err, otherUser) {
             if (err) throw err
             if (otherUser != null) {
