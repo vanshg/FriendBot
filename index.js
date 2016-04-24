@@ -96,10 +96,14 @@ var userExists = function(db, user) {
     var found = false;
     var collection = db.collection('allusers')
     console.log("Entered userExists function")
-    var result = collection.find({
+    var cursor = collection.find({
       id: user
     })
-    console.log(result)
+    cursor.each(function(err, doc){
+        if (err) throw err
+        console.log("Entered founduser function callback")
+        found = true
+    })
     console.log("Returning value of " + found)
     return found;
 }
