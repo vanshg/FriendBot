@@ -89,7 +89,8 @@ var addUser = function(db, user, name) {
     var collection = db.collection('allusers')
     collection.insert({
         Name: name,
-        id: user
+        id: user,
+        inConvo: false
     }, function(err, returnedUser){
         if (err) throw err
         console.log("Added " + user + " to database")
@@ -110,24 +111,35 @@ var addUserIfDoesNotExist = function(db, user) {
 
 
 var pairUser = function(db, user) {
+    var otherUserID = null
     var allUsers = db.collection('allusers')
-    var cursor = allUsers.find({"id":{$nin:[user]}})
+    var cursor = allUsers.find({"id":{$nin:[user]}, inConvo:{$in: [false]}})
     cursor.count(function(err, numDocs) {
         var rand = Math.floor(Math.random()*numDocs)
-        var randomUserCursor = allUsers.find( ).limit(1).skip(rand)
+        var randomUserCursor = allUsers.find({inConvo:{$in: [false]}}).limit(1).skip(rand)
         randomUserCursor.each(function(err, otherUser) {
             if (err) throw err
             if (otherUser != null) {
                 console.log(otherUser)
                 console.log(otherUser['id'])
                 var convos = db.collection('currentconvos')
+                otherUserID = otherUser['id']
                 convos.insert({
                     id1: user,
                     id2: otherUser['id']
                 }, function(err, returnedUser){
                     if (err) throw err
-                    console.log("Added " + user + " and " + otherUser['id'] + " to convos database")
+                    console.log("Added " + user + " and " + otherUserID + " to convos database")
                 })
+                allUsers.updateOne(
+                    {id:{$in: [user]}},
+                    {$set: {"inConvo": true}},
+                    function(err, results)
+                    {
+                      if (err) throw err
+                      console.log(results)
+                    }
+                )
             }
             // otherUser.find({id:1}, function(err, idCursor) {
             //     console.log(idCursor)
