@@ -9,7 +9,6 @@ var db = null
 var url = "mongodb://root:Nishank@ds017231.mlab.com:17231/gofriendbot"
 MongoClient.connect(url, function(err, database) {
   assert.equal(null, err);
-  console.log("Connected correctly to server");
   db = database
 });
 
@@ -47,13 +46,17 @@ app.post('/webhook/', function (req, res) {
             if (text.startsWith("@start")) {
                 pairUser(sender)
             } else if(text.startsWith("@quit")) {
-                unpairUser(sender)
                 text = "The chat has been disconnected"
+                sendTextMessage(sender, text)
+                sendFriendMessage(sender, text)
+                unpairUser(sender)
+                req.sendStatus(200)
+                return
             } else if (text.startsWith("help")) {
             	text = "Hi, and welcome to FriendBot!\n\nYou can use FriendBot to meet new people and make new connections. To get started, just type @start. You will immediately be paired with someone, and you can start chatting. Once you're in the chat, simply type @quit to disconnect from your current conversation.\n\nHappy chatting!"
                 sendTextMessage(sender, text)
                 res.sendStatus(200)
-                return;
+                return
             }
             sendFriendMessage(sender, text)
         }
@@ -126,7 +129,7 @@ var addUser = function(user, name) {
 }
 
 var addUserIfDoesNotExist = function(user) {
-    var found = false;
+    var found = false
     var collection = db.collection('allusers')
     var cursor = collection.find({}).filter({id:user})
     cursor.count(function(err, numDocs) {
@@ -156,7 +159,6 @@ var pairUser = function(user) {
                     if (err) throw err
                     sendTextMessage(otherUserID, "You are now connected. Happy chatting!")
                     sendTextMessage(user, "You are now connected. Happy chatting!")
-                    //Nothing further we need to do
                 })
 
                 allUsers.updateOne(
