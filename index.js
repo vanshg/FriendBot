@@ -47,15 +47,17 @@ app.post('/webhook/', function (req, res) {
                 pairUser(sender)
             } else if(text.startsWith("@quit")) {
                 sendTextMessage(sender, "The chat has been disconnected")
+                sendFriendMessage(sender, "The chat has been disconnected")
                 unpairUser(sender)
-                text = "The chat has been disconnected"
+                res.sendStatus(200)
+                return
             } else if (text.startsWith("help")) {
             	text = "Hi, and welcome to FriendBot!\n\nYou can use FriendBot to meet new people and make new connections. To get started, just type @start. You will immediately be paired with someone, and you can start chatting. Once you're in the chat, simply type @quit to disconnect from your current conversation.\n\nHappy chatting!"
                 sendTextMessage(sender, text)
                 res.sendStatus(200)
-                return;
+                return
             }
-            sendFriendMessage(sender, text)
+            sendFriendMessage(sender, "Anonymous: " + text)
         }
     }
     res.sendStatus(200) //Successful
