@@ -49,8 +49,7 @@ app.post('/webhook/', function (req, res) {
             addUserIfDoesNotExist(sender)
             if (text.startsWith("@start ")) {
                 pairUser(sender)
-            } else if(text.startsWith("@quit ")) {
-                console.log("Got here")
+            } else if(text.startsWith("@quit")) {
                 unpairUser(sender)
             }
             sendFriendMessage(sender, text)
@@ -194,8 +193,10 @@ var unpairUser = function(user) {
     var otherUserID = null
     var allUsers = db.collection('allusers')
     var cursor = allUsers.find({"id":{$nin:[user]}, inConvo:{$in: [true]}})
-    console.log("Got to line 198")
-    cursor.count(function(err, otherUser) {
+    cursor.count(function(err, numDocs) {
+        //var rand = Math.floor(Math.random()*numDocs)
+        var userCursor = allUsers.find({"id":{$nin:[user]}, inConvo:{$in: [true]}})
+        userCursor.each(function(err, otherUser) {
             if (err) throw err
             if (otherUser != null) {
                 console.log(otherUser)
@@ -224,4 +225,6 @@ var unpairUser = function(user) {
             //     console.log(idCursor)
             // })
         })
-  }
+    })
+
+}
