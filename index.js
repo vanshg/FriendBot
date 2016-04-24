@@ -9,7 +9,6 @@ var db = null
 var url = "mongodb://root:Nishank@ds017231.mlab.com:17231/gofriendbot"
 MongoClient.connect(url, function(err, database) {
   assert.equal(null, err);
-  console.log("Connected correctly to server");
   db = database
 });
 
@@ -47,6 +46,7 @@ app.post('/webhook/', function (req, res) {
             if (text.startsWith("@start")) {
                 pairUser(sender)
             } else if(text.startsWith("@quit")) {
+                sendTextMessage(sender, "The chat has been disconnected")
                 unpairUser(sender)
                 text = "The chat has been disconnected"
             } else if (text.startsWith("help")) {
@@ -83,7 +83,6 @@ function sendFriendMessage(sender, text) {
             result2.each(function(err, otherUser) {
                 if (err) throw err
                 if (otherUser != null) {
-                    console.log(otherUser['id1'])
                     sendTextMessage(otherUser['id1'], text)
                 }
             })
@@ -188,8 +187,6 @@ var unpairUser = function(user) {
         userCursor.each(function(err, otherUser) {
             if (err) throw err
             if (otherUser != null) {
-                console.log(otherUser)
-                console.log(otherUser['id'])
                 var convos = db.collection('currentconvos')
                 otherUserID = otherUser['id']
                 convos.remove({
