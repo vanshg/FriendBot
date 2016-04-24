@@ -102,7 +102,9 @@ var userExists = function(db, user) {
     cursor.each(function(err, doc){
         if (err) throw err
         console.log("Entered founduser function callback")
-        found = true
+        if (doc != null) {
+            found = true
+        }
     })
     console.log("Returning value of " + found)
     return found;
