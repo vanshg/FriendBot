@@ -50,7 +50,7 @@ app.post('/webhook/', function (req, res) {
             if (text.startsWith("Start ")) {
                 pairUser(sender)
             }
-            sendFriendMessage()
+            sendFriendMessage(sender, text)
          //    if (sender == 1134345316597574) {
          //    	sendTextMessage(854092591384757, text)
         	// } else if (sender == 854092591384757) {
