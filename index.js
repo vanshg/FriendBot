@@ -224,6 +224,4 @@ var unpairUser = function(user) {
             //     console.log(idCursor)
             // })
         })
-    })
-
-}
+  }
