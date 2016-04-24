@@ -51,6 +51,7 @@ app.post('/webhook/', function (req, res) {
                 pairUser(sender)
             } else if(text.startsWith("@quit")) {
                 unpairUser(sender)
+                text = "The chat has been disconnected"
             }
             sendFriendMessage(sender, text)
          //    if (sender == 1134345316597574) {
