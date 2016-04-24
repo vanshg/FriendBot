@@ -46,15 +46,16 @@ app.post('/webhook/', function (req, res) {
             //Check if this person has an ongoing conversation
                 //If so, communicate
                 //Otherwise do the following:
-            addUserIfDoesNotExist(db, sender)
+            addUserIfDoesNotExist(sender)
             if (text.startsWith("Start ")) {
-                pairUser(db, sender)
+                pairUser(sender)
             }
-            if (sender == 1134345316597574) {
-            	sendTextMessage(854092591384757, text)
-        	} else if (sender == 854092591384757) {
-        		sendTextMessage(1134345316597574, text)
-        	}
+            sendFriendMessage()
+         //    if (sender == 1134345316597574) {
+         //    	sendTextMessage(854092591384757, text)
+        	// } else if (sender == 854092591384757) {
+        	// 	sendTextMessage(1134345316597574, text)
+        	// }
         }
     }
     res.sendStatus(200)
@@ -63,7 +64,7 @@ app.post('/webhook/', function (req, res) {
 var token = "CAAGZCjqmOZAN0BAHdHJ5KqHuxZCekEMGV0maLkq2UQXDApJ9FEKto041YOE1JLYEHZCRyB3jcb5RAi7p0gAh4HBZAZC798u7axmkAbno9kGF9YZCEdZBk9qK8F68BZBnLatoZAexaIxfwueIWyZCgWFKk9ZA5wmhckKh3LHTju47yiSUPzgLclle9ZBR5ZCHH4KVLmb5ZAZB6h92AIdXiwZDZD"
 
 
-function sendFriendMessage(db, sender, text) {
+function sendFriendMessage(sender, text) {
     var collection = db.collection('currentconvos')
     var result1 = collection.find({"id1": {$in:[sender]}})
     result1.count(function(err, numResults) {
@@ -111,7 +112,7 @@ function sendTextMessage(sender, text) {
     })
 }
 
-var addUser = function(db, user, name) {
+var addUser = function(user, name) {
     var collection = db.collection('allusers')
     collection.insert({
         Name: name,
@@ -123,20 +124,20 @@ var addUser = function(db, user, name) {
     })
 }
 
-var addUserIfDoesNotExist = function(db, user) {
+var addUserIfDoesNotExist = function(user) {
     var found = false;
     var collection = db.collection('allusers')
     console.log("Entered userExists function")
     var cursor = collection.find({}).filter({id:user})
     cursor.count(function(err, numDocs) {
         if (numDocs == 0) {
-            addUser(db, user, "")
+            addUser(user, "")
         }
     })
 }
 
 
-var pairUser = function(db, user) {
+var pairUser = function(user) {
     var otherUserID = null
     var allUsers = db.collection('allusers')
     var cursor = allUsers.find({"id":{$nin:[user]}, inConvo:{$in: [false]}})
