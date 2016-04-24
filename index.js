@@ -119,6 +119,7 @@ var pairUser = function(db, user) {
         randomUserCursor.each(function(err, otherUser) {
             if (err) throw err
             if (otherUser != null) {
+                console.log(otherUser)
                 console.log(otherUser['id'])
             }
             // otherUser.find({id:1}, function(err, idCursor) {
