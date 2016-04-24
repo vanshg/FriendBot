@@ -47,8 +47,12 @@ app.post('/webhook/', function (req, res) {
                 //If so, communicate
                 //Otherwise do the following:
             addUserIfDoesNotExist(sender)
-            if (text.startsWith("Start ")) {
+            if (text.startsWith("@start ")) {
                 pairUser(sender)
+            }
+            else if(text.startsWith("@quit"))
+            {
+                unpairUser(sender)
             }
             sendFriendMessage(sender, text)
          //    if (sender == 1134345316597574) {
@@ -160,6 +164,43 @@ var pairUser = function(user) {
                     if (err) throw err
                     console.log("Added " + user + " and " + otherUserID + " to convos database")
                 })
+                allUsers.updateOne(
+                    {id:{$in: [user]}},
+                    {$set: {"inConvo": true}},
+                    function(err, results)
+                    {
+                      if (err) throw err
+                      console.log(results)
+                    }
+                )
+                allUsers.updateOne(
+                    {id:{$in: [otherUserID]}},
+                    {$set: {"inConvo": true}},
+                    function(err, results)
+                    {
+                      if (err) throw err
+                      console.log(results)
+                    }
+                )
+            }
+            // otherUser.find({id:1}, function(err, idCursor) {
+            //     console.log(idCursor)
+            // })
+        })
+    })
+
+}
+
+var unpairUser = function(user) {
+    var otherUserID = null
+    var allUsers = db.collection('allusers')
+    var cursor = allUsers.find({"id":{$nin:[user]}, inConvo:{$in: [true]}})
+    cursor.count(function(err, otherUser) {
+            if (err) throw err
+            if (otherUser != null) {
+                console.log(otherUser)
+                console.log(otherUser['id'])
+                otherUserID = otherUser['id']
                 allUsers.updateOne(
                     {id:{$in: [user]}},
                     {$set: {"inConvo": true}},
