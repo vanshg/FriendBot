@@ -50,9 +50,7 @@ app.post('/webhook/', function (req, res) {
             if (text.startsWith("@start ")) {
                 pairUser(sender)
             }
-            else if(text.startsWith("@quit "))
-            {
-                console.log("Got to line 55")
+            else if(text.startsWith("@quit ")) {
                 unpairUser(sender)
             }
             sendFriendMessage(sender, text)
