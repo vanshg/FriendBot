@@ -49,8 +49,6 @@ app.post('/webhook/', function (req, res) {
             addUserIfDoesNotExist(db, sender)
             if (text.startsWith("Start ")) {
                 pairUser(db, sender)
-                //Find a random user to pair up with
-                //Add this pairing to the current coversation database
             }
             if (sender == 1134345316597574) {
             	sendTextMessage(854092591384757, text)
@@ -63,6 +61,34 @@ app.post('/webhook/', function (req, res) {
 })
 
 var token = "CAAGZCjqmOZAN0BAHdHJ5KqHuxZCekEMGV0maLkq2UQXDApJ9FEKto041YOE1JLYEHZCRyB3jcb5RAi7p0gAh4HBZAZC798u7axmkAbno9kGF9YZCEdZBk9qK8F68BZBnLatoZAexaIxfwueIWyZCgWFKk9ZA5wmhckKh3LHTju47yiSUPzgLclle9ZBR5ZCHH4KVLmb5ZAZB6h92AIdXiwZDZD"
+
+
+function sendFriendMessage(db, sender, text) {
+    var collection = db.collection('currentconvos')
+    var result1 = collection.find({"id1": {$in:[sender]}})
+    result1.count(function(err, numResults) {
+        if (numDocs != 0) {
+            result1.each(function(err, otherUser) {
+                if (err) throw err
+                if (otherUser != null) {
+                    sendTextMessage(otherUser['id'], text)
+                }
+            })
+        }
+    })
+    var result2 = collection.find({"id2": {$in:[sender]}})
+    result2.count(function(err, numResults) {
+        if (numDocs != 0) {
+            result2.each(function(err, otherUser) {
+                if (err) throw err
+                if (otherUser != null) {
+                    sendTextMessage(otherUser['id'], text)
+                }
+            })
+        }
+    })
+}
+
 
 function sendTextMessage(sender, text) {
     messageData = {
