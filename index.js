@@ -50,7 +50,7 @@ app.post('/webhook/', function (req, res) {
                 unpairUser(sender)
                 text = "The chat has been disconnected"
             } else if (text.startsWith("help")) {
-            	text = "Hi, and welcome to FriendBot!\nYou can use FriendBot to meet new people and make new connections. To get started, just type @start. You will immediately be paired with someone, and you can start chatting. Once you're in the chat, simply type @quit to disconnect from your current conversation.\n\nHappy Chatting!"
+            	text = "Hi, and welcome to FriendBot!\nYou can use FriendBot to meet new people and make new connections. To get started, just type @start. You will immediately be paired with someone, and you can start chatting. Once you're in the chat, simply type @quit to disconnect from your current conversation.\n\nHappy chatting!"
                 sendTextMessage(sender, text)
                 res.sendStatus(200)
                 return;
@@ -152,8 +152,10 @@ var pairUser = function(user) {
                 convos.insert({
                     id1: user,
                     id2: otherUser['id']
-                }, function(err, returnedUser){
+                }, function(err, convo){
                     if (err) throw err
+                    sendTextMessage(convo['id1'], "You are now connected. Happy chatting!")
+                    sendTextMessage(convo['id2'], "You are now connected. Happy chatting!")
                     //Nothing further we need to do
                 })
 
