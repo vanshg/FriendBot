@@ -117,9 +117,10 @@ var pairUser = function(db, user) {
         var rand = Math.floor(Math.random()*numDocs)
         var randomUserCursor = allUsers.find().limit(1).skip(rand)
         randomUserCursor.each(function(err, otherUser) {
-            otherUser.find({id:1}, function(err, idCursor) {
-                console.log(idCursor)
-            })
+            console.log(otherUser)
+            // otherUser.find({id:1}, function(err, idCursor) {
+            //     console.log(idCursor)
+            // })
         })
     })
     
