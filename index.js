@@ -49,8 +49,7 @@ app.post('/webhook/', function (req, res) {
             addUserIfDoesNotExist(sender)
             if (text.startsWith("@start ")) {
                 pairUser(sender)
-            }
-            else if(text.startsWith("@quit ")) {
+            } else if(text.startsWith("@quit ")) {
                 console.log("Got here")
                 unpairUser(sender)
             }
