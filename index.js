@@ -66,7 +66,7 @@ var token = "CAAGZCjqmOZAN0BAHdHJ5KqHuxZCekEMGV0maLkq2UQXDApJ9FEKto041YOE1JLYEHZ
 
 function sendFriendMessage(sender, text) {
     var collection = db.collection('currentconvos')
-    var result1 = collection.find({"id1" : sender})
+    var result1 = collection.find({id1: sender})
     result1.count(function(err, numResults) {
         if (numResults != 0) {
             result1.each(function(err, otherUser) {
@@ -78,7 +78,7 @@ function sendFriendMessage(sender, text) {
             })
         }
     })
-    var result2 = collection.find({"id2" : sender})
+    var result2 = collection.find({id2: sender})
     result2.count(function(err, numResults) {
         if (numResults != 0) {
             result2.each(function(err, otherUser) {
