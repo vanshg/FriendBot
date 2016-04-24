@@ -68,7 +68,7 @@ function sendFriendMessage(sender, text) {
     var collection = db.collection('currentconvos')
     var result1 = collection.find({"id1": {$in:[sender]}})
     result1.count(function(err, numResults) {
-        if (numDocs != 0) {
+        if (numResults != 0) {
             result1.each(function(err, otherUser) {
                 if (err) throw err
                 if (otherUser != null) {
@@ -79,7 +79,7 @@ function sendFriendMessage(sender, text) {
     })
     var result2 = collection.find({"id2": {$in:[sender]}})
     result2.count(function(err, numResults) {
-        if (numDocs != 0) {
+        if (numResults != 0) {
             result2.each(function(err, otherUser) {
                 if (err) throw err
                 if (otherUser != null) {
