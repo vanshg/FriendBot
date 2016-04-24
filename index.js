@@ -140,6 +140,15 @@ var pairUser = function(db, user) {
                       console.log(results)
                     }
                 )
+                allUsers.updateOne(
+                    {id:{$in: [otherUserID]}},
+                    {$set: {"inConvo": true}},
+                    function(err, results)
+                    {
+                      if (err) throw err
+                      console.log(results)
+                    }
+                )
             }
             // otherUser.find({id:1}, function(err, idCursor) {
             //     console.log(idCursor)
