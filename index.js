@@ -52,12 +52,11 @@ app.post('/webhook/', function (req, res) {
                 res.sendStatus(200)
                 return
             } else if (text == "help") {
-            	text = "Hi, and welcome to FriendBot!\n\nYou can use FriendBot to \
-                meet new people and make new connections. To start a new conversation, just type \
-                start. You will immediately be paired with someone, and you can \
-                start chatting.\nOnce you're in the chat, simply type quit to \
-                disconnect from your current conversation. If you are ever unsure \
-                of what to do, just type help and this message will show up again\n\
+                text = "Welcome to FriendBot! You can use FriendBot to meet new people.\n\n\
+                Here are the commands you can use:\n\
+                start - This will initiate a new conversation\n\
+                quit – This will end the current conversation\n\
+                help - This will display this help message\n\n\
                 Happy chatting!"
                 sendTextMessage(sender, text)
                 res.sendStatus(200)
