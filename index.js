@@ -6,7 +6,7 @@ var MongoClient = require('mongodb').MongoClient
 var app = express()
 var db = null
 
-var url = "mongodb://root:Nishank@ds017231.mlab.com:17231/gofriendbot"
+var url = "mongodb://friendbot:Nishank@ds019101.mlab.com:19101/friendbotdb"
 MongoClient.connect(url, function(err, database) {
   assert.equal(null, err);
   db = database
