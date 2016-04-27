@@ -22,7 +22,13 @@
 					<h1><a href="#">FriendBot</a></h1>
 					<p>Connect with new people.</p>
 					<ul class="actions">
-						<li><a href="https://www.facebook.com/GoFriendBot/" class="button special icon fa-comments" target="_blank">Try now</a></li>
+<!-- 						<li><a href="https://www.facebook.com/GoFriendBot/" class="button special icon fa-comments" target="_blank">Try now</a></li> -->
+						<li>
+						<div class="fb-messengermessageus"
+								messenger_app_id="492094427653341"
+								page_id="234474716915636"
+								color="blue"
+								size="large"> </div> </li>
 						<li><a href="#one" class="button icon fa-chevron-down scrolly">Learn More</a></li>
 					</ul>
 				</div>
@@ -55,6 +61,11 @@
 						<div class="image"><img src="images/anonymous.png" alt="" /></div>
 						<div class="content">
 							<h3>Anonymous chatting</h3>
+							<div class="fb-messengermessageus"
+								messenger_app_id="492094427653341"
+								page_id="234474716915636"
+								color="blue"
+								size="standard"> </div>
 							<p>FriendBot allows you to chat with people that have similar interests as you. This allows you to connect with other people and meet new people.</p>
 						</div>
 					</section>
@@ -89,11 +100,26 @@
 			</footer>
 
 		<!-- Scripts -->
+			<script>
+				window.fbAsyncInit = function() {
+					FB.init({
+						appId      : '492094427653341',
+						xfbml      : true,
+						version    : 'v2.6'
+					});
+				};
+				(function(d, s, id){
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id)) { return; }
+					js = d.createElement(s); js.id = id;
+					js.src = "//connect.facebook.net/en_US/sdk.js";
+					fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+			</script>
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.scrolly.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
 
 	</body>
