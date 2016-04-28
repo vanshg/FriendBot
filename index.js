@@ -1,7 +1,6 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var request = require('request')
-var requestify = require('requestify'); 
 var MongoClient = require('mongodb').MongoClient
     , assert = require('assert');
 var app = express()
@@ -134,11 +133,7 @@ var addUserIfDoesNotExist = function(user) {
     var cursor = collection.find({}).filter({id:user})
     cursor.count(function(err, numDocs) {
         if (numDocs == 0) {
-        	addUser(user, "")
-        	requestify.get("https://graph.facebook.com/v2.6/" + user + "?fields=first_name,last_name,profile_pic&access_token=" + accessToken).then(function(response) {
-        		var result = response.getBody()
-        		console.log(result)
-        	})            
+        	addUser(user, "")     
         }
     })
 }
