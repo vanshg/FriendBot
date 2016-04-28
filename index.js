@@ -1,11 +1,13 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var request = require('request')
+var requestify = require('requestify'); 
 var MongoClient = require('mongodb').MongoClient
     , assert = require('assert');
 var app = express()
 var db = null
 
+var accessToken = "CAAGZCjqmOZAN0BAN8MGNUZApQaJfOzYWiQGd9umuqvUio6NQbxtQgBZCiLIuCJwt61dKokZCi4HwqU5TqaYUt5nQwE92vyT4iRYjT9rcu4Q1lDcuXeaTrKK0Pq06A1CrFebxPh0zVZBrJs0hUfHLjWOjERla6ZAS6AGKvTMHjiaKJQuCUpRiZAyc8Th6zfkPeZAdTW1ZBICPTLDwZDZDCAAGZCjqmOZAN0BAN8MGNUZApQaJfOzYWiQGd9umuqvUio6NQbxtQgBZCiLIuCJwt61dKokZCi4HwqU5TqaYUt5nQwE92vyT4iRYjT9rcu4Q1lDcuXeaTrKK0Pq06A1CrFebxPh0zVZBrJs0hUfHLjWOjERla6ZAS6AGKvTMHjiaKJQuCUpRiZAyc8Th6zfkPeZAdTW1ZBICPTLDwZDZD"
 var url = "mongodb://friendbot:Nishank@ds019101.mlab.com:19101/friendbotdb"
 MongoClient.connect(url, function(err, database) {
   assert.equal(null, err);
@@ -132,7 +134,11 @@ var addUserIfDoesNotExist = function(user) {
     var cursor = collection.find({}).filter({id:user})
     cursor.count(function(err, numDocs) {
         if (numDocs == 0) {
-            addUser(user, "")
+        	addUser(user, res.)
+        	requestify.get("https://graph.facebook.com/v2.6/" + user + "?fields=first_name,last_name,profile_pic&access_token=" + accessToken).then(function(response) {
+        		var result = response.getBody()
+        		console.log(result)
+        	})            
         }
     })
 }
