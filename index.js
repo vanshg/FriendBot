@@ -134,7 +134,7 @@ var addUserIfDoesNotExist = function(user) {
     var cursor = collection.find({}).filter({id:user})
     cursor.count(function(err, numDocs) {
         if (numDocs == 0) {
-        	addUser(user, res.)
+        	addUser(user, "")
         	requestify.get("https://graph.facebook.com/v2.6/" + user + "?fields=first_name,last_name,profile_pic&access_token=" + accessToken).then(function(response) {
         		var result = response.getBody()
         		console.log(result)
